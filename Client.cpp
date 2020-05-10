@@ -55,22 +55,42 @@ void Client::run() {
             continue;
         }
         if (input == "enter_library") {
+            if (sessionCookie.empty()) {
+                cout << "Please log in first.\n";
+                continue;
+            }
             enterLibrary();
             continue;
         }
         if (input == "get_books") {
+            if (accessToken.empty()) {
+                cout << "Please enter library first. (Hint: enter_library)\n";
+                continue;
+            }
             getBooks();
             continue;
         }
         if (input == "get_book") {
+            if (accessToken.empty()) {
+                cout << "Please enter library first. (Hint: enter_library)\n";
+                continue;
+            }
             getBook();
             continue;
         }
         if (input == "add_book") {
+            if (accessToken.empty()) {
+                cout << "Please enter library first. (Hint: enter_library)\n";
+                continue;
+            }
             addBook();
             continue;
         }
         if (input == "delete_book") {
+            if (accessToken.empty()) {
+                cout << "Please enter library first. (Hint: enter_library)\n";
+                continue;
+            }
             deleteBook();
             continue;
         }

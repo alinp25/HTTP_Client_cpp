@@ -2,7 +2,7 @@
 #include "Includes.hpp"
 
 void Client::addBook() {
-    string title, author, genre, publisher;
+    string title, author, genre, publisher, pageCountStr;
     int pageCount;
     getline(cin, title, '\n'); // Clear buffer
     cout << "Title = "; 
@@ -14,12 +14,14 @@ void Client::addBook() {
     cout << "Publisher = "; 
     getline(cin, publisher, '\n');
     cout << "Page count (positive number) = "; 
-    cin >> pageCount;
+    cin >> pageCountStr;
 
-    if (pageCount <= 0) {
-        cout << "The page count should be a positive number\n.";
+    if (Utils::isPositiveInteger(pageCountStr) == false) {
+        cout << "The page count should be a positive number.\n";
         return;
     }
+
+    pageCount = stoi(pageCountStr);
 
     char **headers = (char**)malloc(1 * sizeof(char*));
     char **headersNames = (char**)malloc(1 * sizeof(char*));

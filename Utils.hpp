@@ -2,11 +2,12 @@
 #define UTILS_HPP
 
 #include <cstring>
+#include <string>
 
 using namespace std;
 
 class Utils {
- public:
+public:
     /**
      * Concatenates a line to the message
      *
@@ -23,6 +24,14 @@ class Utils {
      * @return pointer at the beginning of the JSON
      */
     static char* basicExtractJsonResponse(char *str);
+
+    /**
+     * Check if a string represents a positive integer number
+     * 
+     * @param s String to check
+     * @return bool that represents the truth-value
+    */
+    static bool isPositiveInteger(string s);
 };
 
 #endif

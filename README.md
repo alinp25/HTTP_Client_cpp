@@ -29,30 +29,41 @@ Since the client is going to act like an interface between the user and the serv
     * handles a registration
     * if the user tries accessing the command while logged in, he will be prompted with an error message
     * if the register process starts succesfully the user is prompted to choose an username and a password
+
 * **login**
     * handles a login process
     * if the user tries accessing the command while being already logged in, he will be prompted with an error message
     * if the login process starts succesfully the user is prompted to enter his credentials
+
 * **enter_library**
     * the enter_library command should be executed after the login process, to gain access in the library (it provides de JWT Token needed for the Authorization to be successful)
+
 * **get_books**
     * returns a list of all the user's books
 
 * **get_book**
     * the user is prompted to enter an id, then a json containing all the book's details are provided
+
 * **add_book**
     * inserts a new book into the library
     * prompts the user with input fields for title, author, genre, publisher and page count
+
 * **delete_book**
     * delete a book based on an id that the user is prompted to provide
+
 * **logout**
     * logs out the user from the system
+
 * **exit**
     * closes the client
 
+The error handling for input is done right into the client, but if there appear any server-errors (like duplicate book names, strings too long, wrong username and password) we expect the server to provide them in a not-OK response status, together with the error message in a JSON as `{error: 'Error message'}`. All the erors are prompted to the user, the client not failing on receiving any error message or wrong input.
+
 ### 3.3 JSON Handling
 
-The JSON handling is done using the [_nlohmann_ library](https://github.com/nlohmann/json). Even though, retrieving the JSON from the request's response is done using the method _basicExtractJsonResponse_ implemented in _Utils_ that simply queries the string, returning the position of the first JSON string (that, happily, is situated at the end of the response, so no other text that can bother us is following it).
+The JSON handling is done using the [_nlohmann_ library](https://github.com/nlohmann/json). Even though, retrieving the JSON from the request's response is done using the method _basicExtractJsonResponse_ implemented in _Utils_ that simply queries the string, returning the position of the first JSON string (that, happily, is situated at the end of the response, so no other text that can bother us is following it). 
+
+The library was used for creating the JSONs needed for the POST requests and also for extracting the fields (error fields mostly) from the JSONs received as request responses.
 
 ### 3.4 Project structure
 

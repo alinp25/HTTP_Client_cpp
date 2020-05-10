@@ -18,20 +18,24 @@ void Client::getBooks() {
     response = receiveFromServer();
     int statusCode = RequestHandler::getStatusCode(response);
 
-    string jsonStr;
+    char *jsonResponse;
     json jsonVal; 
 
     string responseValue;
 
     switch (statusCode) {
         case 200:
-            jsonStr = Utils::basicExtractJsonResponse(response);
-            responseValue = "[" + string(jsonStr);
+            jsonResponse = Utils::basicExtractJsonResponse(response);
+            if (!jsonResponse) {
+                cout << "No books found in your library.\n";
+                break;
+            }
+            responseValue = "[" + string(jsonResponse);
             cout << responseValue << "\n";
             break;
         default:
-            jsonStr = Utils::basicExtractJsonResponse(response);
-            jsonVal = json::parse(jsonStr);
+            jsonResponse = Utils::basicExtractJsonResponse(response);
+            jsonVal = json::parse(string(jsonResponse));
             cout << "ERROR: " << 
                 jsonVal.value("error", "Unknown error") << "\n";
             break;
