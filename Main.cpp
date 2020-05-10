@@ -1,7 +1,7 @@
-#include "Server.hpp"
+#include "Client.hpp"
 
-int main(int argc, char *argv) {
-    Server server;
-    server.run();    
+int main() {
+    Client client;
+    client.run();    
     return 0;
 }

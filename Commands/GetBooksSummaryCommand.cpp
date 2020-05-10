@@ -1,7 +1,7 @@
-#include "../Server.hpp"
+#include "../Client.hpp"
 #include "Includes.hpp"
 
-void Server::getBooks() {
+void Client::getBooks() {
     openConnection();
 
     char **headers = (char**)malloc(1 * sizeof(char*));

@@ -82,7 +82,9 @@ int Buffer::findInsensitive(const char *dataToFind, __uint128_t data_size) {
 
 char* Buffer::getData() {
     if (data == nullptr) {
-        return "";
+        data = (char*)malloc(sizeof(char));
+        strcpy(data, "");
+        return data;
     }
     return data;
 }

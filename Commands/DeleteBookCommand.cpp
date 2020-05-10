@@ -1,7 +1,7 @@
-#include "../Server.hpp"
+#include "../Client.hpp"
 #include "Includes.hpp"
 
-void Server::deleteBook() {
+void Client::deleteBook() {
     int id;
     cout << "Book id = "; cin >> id;
     openConnection();

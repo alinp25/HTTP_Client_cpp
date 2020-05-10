@@ -1,8 +1,9 @@
-#include "../Server.hpp"
+#include "../Client.hpp"
 #include "Includes.hpp"
 
-void Server::addBook() {
-    string title, author, genre, publisher, pageCount;
+void Client::addBook() {
+    string title, author, genre, publisher;
+    int pageCount;
     getline(cin, title, '\n'); // Clear buffer
     cout << "Title = "; 
     getline(cin, title, '\n');
@@ -12,8 +13,13 @@ void Server::addBook() {
     getline(cin, genre, '\n');
     cout << "Publisher = "; 
     getline(cin, publisher, '\n');
-    cout << "Page count (number) = "; 
+    cout << "Page count (positive number) = "; 
     cin >> pageCount;
+
+    if (pageCount <= 0) {
+        cout << "The page count should be a positive number\n.";
+        return;
+    }
 
     char **headers = (char**)malloc(1 * sizeof(char*));
     char **headersNames = (char**)malloc(1 * sizeof(char*));

@@ -1,7 +1,7 @@
-#include "../Server.hpp"
+#include "../Client.hpp"
 #include "Includes.hpp"
 
-void Server::getBook() {
+void Client::getBook() {
     int id;
     cout << "Book id = "; cin >> id;
     openConnection();

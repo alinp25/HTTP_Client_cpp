@@ -7,10 +7,10 @@
 #include <string>
 #include <iostream>
 
-char* RequestHandler::GET(char *host, char *url, char *query_params,
-                            char **headers, char **headersNames, 
-                            int headersCount, char **cookies, 
-                            int cookies_count) {
+char* RequestHandler::GET(const char *host, const char *url, 
+                            char *query_params, char **headers, 
+                            char **headersNames, int headersCount, 
+                            char **cookies, int cookies_count) {
 
     char *message = (char*)calloc(BUFLEN, sizeof(char));
     char *line = (char*)calloc(LINELEN, sizeof(char));
@@ -47,14 +47,14 @@ char* RequestHandler::GET(char *host, char *url, char *query_params,
     return message;
 }
 
-char* RequestHandler::POST(char *host, char *url, char* content_type, 
-                        char **headers, char **headersNames, int headersCount,
+char* RequestHandler::POST(const char *host, const char *url, 
+                        const char* content_type, char **headers, 
+                        char **headersNames, int headersCount,
                         char *content, char **cookies, int cookies_count) {
 
     char *message = (char*)calloc(BUFLEN, sizeof(char));
     char *line = (char*)calloc(LINELEN, sizeof(char));
-    char *body_data_buffer = (char*)calloc(LINELEN, sizeof(char));
-
+    
     // Write the method name, URL and protocol type
     sprintf(line, "POST %s HTTP/1.1", url);
     Utils::computeMessage(message, line);
@@ -97,10 +97,10 @@ char* RequestHandler::POST(char *host, char *url, char* content_type,
     return message;
 }
 
-char* RequestHandler::DELETE(char *host, char *url, char *query_params,
-                            char **headers, char **headersNames, 
-                            int headersCount, char **cookies, 
-                            int cookies_count) {
+char* RequestHandler::DELETE(const char *host, const char *url, 
+                            char *query_params, char **headers, 
+                            char **headersNames, int headersCount, 
+                            char **cookies, int cookies_count) {
 
     char *message = (char*)calloc(BUFLEN, sizeof(char));
     char *line = (char*)calloc(LINELEN, sizeof(char));

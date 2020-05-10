@@ -1,4 +1,4 @@
-#include "Server.hpp"
+#include "Client.hpp"
 #include "Utils.hpp"
 #include "Connection.hpp"
 #include "Buffer.hpp"
@@ -17,22 +17,25 @@
 using namespace std;
 using json = nlohmann::json;
 
-Server::Server() {
+Client::Client() {
     isRunning = true;
 }
 
-void Server::run() {
-    cout << "Server started...\n";
+void Client::run() {
+    cout << "Client started...\n";
     string input;
     while (isRunning) {
+        // Retrieve the user input
         cout << "-------------------------------------------\n";
         cout << "> ";
         cin >> input;
+        // Handle the input 
         if (input == "exit") {
             isRunning = false;
             break;
         }
         if (input == "register") {
+            // Available only if there is no user logged in at the moment
             if (sessionCookie.length() > 0) {
                 cout << "You are logged in.\n";
                 cout << "Please log out before you register a new account.\n";
@@ -42,6 +45,7 @@ void Server::run() {
             continue;
         }
         if (input == "login") {
+            // Available only if there is no user logged in at the moment
             if (sessionCookie.length() > 0) {
                 cout << "You are logged in.\n";
                 cout << "To log in with another account please log out.\n";
@@ -74,42 +78,46 @@ void Server::run() {
             logoutUser();
             continue;
         }
+        cout << "Command not found\n";
     }
     cout << "-------------------------------------------\n";
-    cout << "Exiting server...\n";
+    cout << "Exiting client...\n";
 }
 
 
 
-void Server::openConnection() {
+void Client::openConnection() {
     struct sockaddr_in serv_addr;
     socketFD = socket(CONN_IP_TYPE, CONN_SOCK_TYPE, CONN_FLAGS);
-    if (socketFD < 0)
+    if (socketFD < 0) {
         cout << "ERROR opening socket\n";
-    //     error("ERROR opening socket");
+        return ;
+    }
 
+    // Setting the serv_addr content to the desired connection
     memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = CONN_IP_TYPE;
     serv_addr.sin_port = htons(CONN_PORT);
     inet_aton(CONN_HOST_IP, &serv_addr.sin_addr);
 
-    if (connect(socketFD, (struct sockaddr*) &serv_addr, sizeof(serv_addr)) < 0)
-        // error("ERROR connecting");
+    if (connect(socketFD, (struct sockaddr*)&serv_addr, 
+                                                    sizeof(serv_addr)) < 0) {
         cout << "ERROR connecting...\n";
+        return ;
+    }
 }
 
-void Server::closeConnection() {
+void Client::closeConnection() {
     close(socketFD);
 }
 
-void Server::sendToServer(char *message) {
+void Client::sendToServer(char *message) {
     int bytes, sent = 0;
     int total = strlen(message);
 
     do {
         bytes = write(socketFD, message + sent, total - sent);
         if (bytes < 0) {
-            // error("ERROR writing message to socket");
             cout << "ERROR writing message to socket\n";
         }
 
@@ -121,15 +129,15 @@ void Server::sendToServer(char *message) {
     } while (sent < total);
 }
 
-char* Server::receiveFromServer() {
+char* Client::receiveFromServer() {
     char response[BUFLEN];
     Buffer buffer;
     int header_end = 0;
     int content_length = 0;
+
     do {
         int bytes = read(socketFD, response, BUFLEN);
-        if (bytes < 0){
-            // error("ERROR reading response from socket");
+        if (bytes < 0) {
             cout << "ERROR reading response from socket\n";
         }
         if (bytes == 0) {
@@ -158,11 +166,11 @@ char* Server::receiveFromServer() {
     } while (1);
 
     size_t total = content_length + (size_t) header_end;
+
     while (buffer.getSize() < total) {
         int bytes = read(socketFD, response, BUFLEN);
 
         if (bytes < 0) {
-            // error("ERROR reading response from socket");
             cout << "ERROR reading response from socket\n";
         }
 
@@ -172,6 +180,7 @@ char* Server::receiveFromServer() {
 
         buffer.add(response, bytes);
     }
+    
     buffer.add("", 1);
     return strdup(buffer.getData());
 }

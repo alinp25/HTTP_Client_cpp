@@ -1,7 +1,7 @@
-#include "../Server.hpp"
+#include "../Client.hpp"
 #include "Includes.hpp"
 
-void Server::loginUser() {
+void Client::loginUser() {
     string username, password;
     getline(cin, username, '\n'); // Clear buffer
     cout << "Username = "; 

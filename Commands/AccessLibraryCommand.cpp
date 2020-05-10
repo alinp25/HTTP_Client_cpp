@@ -1,7 +1,7 @@
-#include "../Server.hpp"
+#include "../Client.hpp"
 #include "Includes.hpp"
 
-void Server::enterLibrary() {
+void Client::enterLibrary() {
     openConnection();
 
     char **cookies = (char**)malloc(1 * sizeof(char*));
