@@ -11,19 +11,19 @@
 
 ## 2. Homework description
 
-> Implement a C++ client that interacts with a server. The server expose a REST API and simulates an online library. The client accepts user input and sends requests and handles responses from the server. Client's goal is to work like a interface for the virtual library.
+Implement a C++ client that interacts with a server. The server expose a REST API and simulates an online library. The client accepts user input and sends requests and handles responses from the server. Client's goal is to work like a interface for the virtual library.
 
 ## 3. Implementation
 
-> ### 3.1 Client-Server Connection
+### 3.1 Client-Server Connection
 
->> The connection details are stored in the _Connection.hpp_ file and the connection handling (opening and closing) are done in the _Client_ itself (closeConnection, openConnection methods). 
+The connection details are stored in the _Connection.hpp_ file and the connection handling (opening and closing) are done in the _Client_ itself (closeConnection, openConnection methods). 
 
->> The connection is handled through a Socket File Descriptor that is stored as private information inside the client.
+The connection is handled through a Socket File Descriptor that is stored as private information inside the client.
 
-> ### 3.2 The Client-Server interaction
+### 3.2 The Client-Server interaction
 
->> Since the client is going to act like an interface between the user and the server, I structured the interaction with it as a continuous loop of user-input-awaiting, where each action is triggered by one of the following commands:
+Since the client is going to act like an interface between the user and the server, I structured the interaction with it as a continuous loop of user-input-awaiting, where each action is triggered by one of the following commands:
 
 * **register**
     * handles a registration
@@ -50,21 +50,21 @@
 * **exit**
     * closes the client
 
-> ### 3.3 JSON Handling
+### 3.3 JSON Handling
 
->> The JSON handling is done using the [_nlohmann_ library](https://github.com/nlohmann/json). Even though, retrieving the JSON from the request's response is done using the method _basicExtractJsonResponse_ implemented in _Utils_ that simply queries the string, returning the position of the first JSON string (that, happily, is situated at the end of the response, so no other text that can bother us is following it).
+The JSON handling is done using the [_nlohmann_ library](https://github.com/nlohmann/json). Even though, retrieving the JSON from the request's response is done using the method _basicExtractJsonResponse_ implemented in _Utils_ that simply queries the string, returning the position of the first JSON string (that, happily, is situated at the end of the response, so no other text that can bother us is following it).
 
-> ### 3.4 Project structure
+### 3.4 Project structure
 
->> The project consists of 4 main classes: _Client, Buffer, Utils, RequestHandler_, that are situated in the parent folder. The _nlohmann_ folder contains the JSON library presented at the previous point. The Commands folder contains the implementations for all the commands provided for the user through the client interface.
+The project consists of 4 main classes: _Client, Buffer, Utils, RequestHandler_, that are situated in the parent folder. The _nlohmann_ folder contains the JSON library presented at the previous point. The Commands folder contains the implementations for all the commands provided for the user through the client interface.
 
->> Each method has a short documentation of it's action, parameters and return type. The methods are pretty self-explanatory by their name, and their implementation is not something that tends to rocket-sience that needs to be explained, it can be easily understood from the code.
+Each method has a short documentation of it's action, parameters and return type. The methods are pretty self-explanatory by their name, and their implementation is not something that tends to rocket-sience that needs to be explained, it can be easily understood from the code.
 
 ## 4. Running the project
 
->> Running the project can be done by compiling the source code using the &nbsp; `make` command, followed by running the client using &nbsp; `./client`.
+Running the project can be done by compiling the source code using the &nbsp; `make` command, followed by running the client using &nbsp; `./client`.
 
->> The build's output is generated in the _build_ folder, while in the source folder will be created a sym-link to the `client` executable. 
+The build's output is generated in the _build_ folder, while in the source folder will be created a sym-link to the `client` executable. 
 
 ## 5. References
 
